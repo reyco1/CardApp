@@ -16,6 +16,8 @@ package com.andywoods.multitrialapp
 	import com.andywoods.multitrialapp.view.ui.CardMediator;
 	import com.andywoods.multitrialapp.view.ui.Group;
 	import com.andywoods.multitrialapp.view.ui.GroupMediator;
+	import com.andywoods.multitrialapp.view.ui.Row;
+	import com.andywoods.multitrialapp.view.ui.RowMediator;
 	
 	import flash.events.IEventDispatcher;
 	
@@ -56,6 +58,7 @@ package com.andywoods.multitrialapp
 			mediatorMap.map(CardContainer).toMediator(CardContainerMediator);
 			mediatorMap.map(Card).toMediator(CardMediator);
 			mediatorMap.map(Group).toMediator(GroupMediator);
+			mediatorMap.map(Row).toMediator(RowMediator);
 			
 			// startup
 			context.afterInitializing( init );

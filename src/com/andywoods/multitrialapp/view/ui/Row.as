@@ -1,7 +1,5 @@
 package com.andywoods.multitrialapp.view.ui
 {
-	import com.greensock.TweenMax;
-	
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -14,12 +12,21 @@ package com.andywoods.multitrialapp.view.ui
 		
 		public var verticalPosition:Number;
 		public var onDrag:Function;
+		public var onDrop:Function;
 		public var index:int;
 		
 		public function Row()
 		{
 			super();			
 			addEventListener( MouseEvent.MOUSE_DOWN, handleMouseDown );
+		}
+		
+		protected function handleMouseDown(event:MouseEvent):void
+		{
+			startDrag( false, new Rectangle(0, 0, 0, parent.height) );
+			
+			stage.addEventListener( MouseEvent.MOUSE_UP, handleMouseUp );
+			stage.addEventListener( MouseEvent.MOUSE_MOVE, handleMouseMove );
 		}
 
 		protected function handleMouseUp(event:MouseEvent):void
@@ -29,15 +36,8 @@ package com.andywoods.multitrialapp.view.ui
 			stage.removeEventListener( MouseEvent.MOUSE_UP, handleMouseUp );
 			stage.removeEventListener( MouseEvent.MOUSE_MOVE, handleMouseMove );
 			
-			TweenMax.to(this, 0.2, {y:verticalPosition});
-		}
-		
-		protected function handleMouseDown(event:MouseEvent):void
-		{
-			startDrag( false, new Rectangle(0, 0, 0, parent.height) );
-			
-			stage.addEventListener( MouseEvent.MOUSE_UP, handleMouseUp );
-			stage.addEventListener( MouseEvent.MOUSE_MOVE, handleMouseMove );
+			if( onDrop != null )
+				onDrop.call( null, this );
 		}
 		
 		protected function handleMouseMove(event:MouseEvent):void
@@ -94,7 +94,30 @@ package com.andywoods.multitrialapp.view.ui
 			{
 				getChildAt( a ).x = getChildAt( a-1 ).x + getChildAt( a-1 ).width;
 			}
-		}		
+		}	
+		
+		public function toArray():Array
+		{
+			var arr:Array = [];
+			var group:Group;
+			
+			for (var a:int = 0; a < numChildren; a++) 
+			{
+				if( getChildAt(a) is Group )
+				{
+					group = getChildAt(a) as Group;	
+					
+					var ids:Array = group.getIdForAllCardsInGroup();
+					if(ids.length == 1)
+						arr.push( ids[0] );
+					else					
+						arr.push( ids );
+				}
+			}	
+			group = null;
+			
+			return arr;
+		}
 		
 		public function get nextRow():Row { return _nextRow; }
 		public function set nextRow(value:Row):void

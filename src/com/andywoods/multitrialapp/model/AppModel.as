@@ -135,10 +135,8 @@ package com.andywoods.multitrialapp.model
 		
 		public function addCards(data:String):void
 		{
-			var items:Vector.<ItemVO> = ItemFactory.parse( data );
-			
-			dispatcher.dispatchEvent( new AppEvent(AppEvent.CARDS_ADDED,items) );
-			
+			var items:Vector.<ItemVO> = ItemFactory.parse( data );			
+			dispatcher.dispatchEvent( new AppEvent(AppEvent.CARDS_ADDED,items) );			
 		}
 	}
 }

@@ -36,9 +36,9 @@ package com.andywoods.multitrialapp.manager
 			call( "editGroup", groupIds );
 		}
 		
-		public function changedOrder( groupIds:String ):void
+		public function orderChanged( order:String ):void
 		{
-			call( "editOrder", groupIds );
+			call( "orderChanged", order );
 		}
 		
 		public function call(method:String, ...arguments):void

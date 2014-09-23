@@ -1,9 +1,9 @@
 package com.andywoods.multitrialapp.view.ui
 {
-	import com.greensock.TweenMax;
 	import com.andywoods.multitrialapp.data.CardProperties;
 	import com.andywoods.multitrialapp.data.GroupProperties;
 	import com.andywoods.multitrialapp.events.GroupEvent;
+	import com.greensock.TweenMax;
 	
 	import flash.display.Shape;
 	import flash.display.Sprite;

@@ -4,6 +4,7 @@ package com.andywoods.multitrialapp.view
 	import com.andywoods.multitrialapp.data.GroupProperties;
 	import com.andywoods.multitrialapp.data.ItemVO;
 	import com.andywoods.multitrialapp.events.AppEvent;
+	import com.andywoods.multitrialapp.events.RowEvent;
 	import com.andywoods.multitrialapp.view.ui.FullScreenScrollBar;
 	import com.andywoods.multitrialapp.view.ui.Group;
 	import com.andywoods.multitrialapp.view.ui.Row;
@@ -23,7 +24,8 @@ package com.andywoods.multitrialapp.view
 		private var groupedCards:Dictionary = new Dictionary();
 		private var scrollBar:FullScreenScrollBar;
 		private var background:TileBackgroundFiller;
-		private var rows:Array;
+		
+		public  var rows:Array;
 		
 		public function CardContainer(w:Number, h:Number)
 		{
@@ -77,6 +79,7 @@ package com.andywoods.multitrialapp.view
 				row.addGroup( group );
 				row.verticalPosition = b * group.height;
 				row.onDrag = handleRowDrag;
+				row.onDrop = handleRowDrop;
 				row.y = b * group.height;
 				
 				if(previousRow == null)
@@ -126,6 +129,13 @@ package com.andywoods.multitrialapp.view
 			row = null;
 		}
 		
+		protected function handleRowDrop( draggingRow:Row ):void
+		{
+			invalidateRows();			
+			var rowIds:Array = toArray();
+			dispatchEvent( new RowEvent( RowEvent.ROW_POSITION_UPDATE, {rowsAsStringArray:rowIds} ) );
+		}
+		
 		private function swapVerticalPosition(rowA:Row, rowB:Row):void
 		{
 			var tempA:Number = rowA.verticalPosition;
@@ -133,6 +143,23 @@ package com.andywoods.multitrialapp.view
 			
 			rowA.verticalPosition = tempB;
 			rowB.verticalPosition = tempA;
+		}
+		
+		private function toArray():Array
+		{
+			var arr:Array = [];
+			var row:Row;
+			
+			for (var a:int = 0; a < rows.length; a++) 
+			{
+				if(container.getChildAt(a) is Row)
+				{
+					row = container.getChildAt(a) as Row;
+					arr.push( row.toArray() );
+				}
+			}			
+			
+			return arr;
 		}
 		
 		protected function handleEmptyRow(event:Event):void
@@ -173,7 +200,7 @@ package com.andywoods.multitrialapp.view
 					row.verticalPosition = a * previousRow.height;
 				}
 				
-				TweenMax.to( row, 0.5, {y:row.verticalPosition, x:0, onUpdate:scrollBar.adjustSize} );				
+				TweenMax.to( row, 0.2, {y:row.verticalPosition, x:0, onUpdate:scrollBar.adjustSize} );				
 				
 				if(previousRow)
 				{
