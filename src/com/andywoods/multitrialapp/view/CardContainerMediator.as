@@ -4,7 +4,7 @@ package com.andywoods.multitrialapp.view
 	import com.andywoods.multitrialapp.events.RowEvent;
 	import com.andywoods.multitrialapp.manager.ExternalInterfaceManager;
 	import com.andywoods.multitrialapp.model.AppModel;
-	import com.andywoods.multitrialapp.util.EncodeUtil;
+	//import com.andywoods.multitrialapp.util.EncodeUtil;
 	
 	import robotlegs.bender.bundles.mvcs.Mediator;
 	
@@ -27,7 +27,8 @@ package com.andywoods.multitrialapp.view
 		
 		private function handleRowPositionChange( event:RowEvent ):void
 		{
-			externalInterfaceManager.orderChanged( EncodeUtil.encodeArray(event.data) );
+			//externalInterfaceManager.orderChanged( EncodeUtil.encodeArray(event.data) );
+			externalInterfaceManager.orderChanged( event.data );
 		}
 		
 		private function handleBackgroundClicked( event:AppEvent ):void

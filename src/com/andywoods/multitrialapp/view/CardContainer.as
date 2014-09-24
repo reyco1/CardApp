@@ -131,9 +131,10 @@ package com.andywoods.multitrialapp.view
 		
 		protected function handleRowDrop( draggingRow:Row ):void
 		{
-			invalidateRows();			
+			var needsUpdating:Boolean = invalidateRows();			
 			var rowIds:Array = toArray();
-			dispatchEvent( new RowEvent( RowEvent.ROW_POSITION_UPDATE, {rowsAsStringArray:rowIds} ) );
+			
+			if(needsUpdating)	dispatchEvent( new RowEvent( RowEvent.ROW_POSITION_UPDATE, {rowsAsStringArray:rowIds} ) );
 		}
 		
 		private function swapVerticalPosition(rowA:Row, rowB:Row):void
@@ -176,7 +177,7 @@ package com.andywoods.multitrialapp.view
 			invalidateRows();
 		}
 		
-		private function invalidateRows():void
+		private function invalidateRows():Boolean
 		{
 			var previousRow:Row 		= null;			
 			var row:Row 				= null;		
@@ -184,6 +185,8 @@ package com.andywoods.multitrialapp.view
 			var a:int 					= 0;
 			
 			rows.sortOn("y", Array.NUMERIC);
+			
+			var needsUpdating:Boolean = false;
 			
 			for (a = 0; a < rows.length; a++) 
 			{
@@ -200,19 +203,24 @@ package com.andywoods.multitrialapp.view
 					row.verticalPosition = a * previousRow.height;
 				}
 				
+				
 				TweenMax.to( row, 0.2, {y:row.verticalPosition, x:0, onUpdate:scrollBar.adjustSize} );				
 				
 				if(previousRow)
 				{
+					if(row.previousRow != previousRow) needsUpdating = true;
+					
 					row.previousRow = previousRow;
 					previousRow.nextRow = row;
 				}
 				
 				previousRow = row;
 			}	
-			
+
 			row = null;
 			previousRow = null;
+			
+			return needsUpdating;
 		}
 		
 		override protected function onResize():void
