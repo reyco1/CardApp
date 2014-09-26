@@ -19,10 +19,16 @@ package com.andywoods.multitrialapp.view
 			// context event listeners
 			addContextListener( AppEvent.INITIALIZE_COMPLETE, handleInitializeComplete, AppEvent );
 			addContextListener( AppEvent.CARDS_ADDED, handleCardsAdded, AppEvent );
+			addContextListener( AppEvent.SELECTED_CARD_LIST_CHANGE, handleCardlistChanged, AppEvent );
 			
 			// view event listeners
 			addViewListener( AppEvent.DESELECT_EVERYTHING, handleBackgroundClicked, AppEvent );
 			addViewListener( RowEvent.ROW_POSITION_UPDATE, handleRowPositionChange, RowEvent );
+		}
+		
+		private function handleCardlistChanged( event:AppEvent ):void
+		{
+			view.handleRowDrop();
 		}
 		
 		private function handleRowPositionChange( event:RowEvent ):void

@@ -130,12 +130,13 @@ package com.andywoods.multitrialapp.view
 			row = null;
 		}
 		
-		protected function handleRowDrop( draggingRow:Row ):void
+		public function handleRowDrop( draggingRow:Row = null ):void
 		{
 			var needsUpdating:Boolean = invalidateRows();			
 			var rowIds:Array = toArray();
 			
-			if(needsUpdating)	dispatchEvent( new RowEvent( RowEvent.ROW_POSITION_UPDATE, {rowsAsStringArray:rowIds} ) );
+			if(needsUpdating)	
+				dispatchEvent( new RowEvent( RowEvent.ROW_POSITION_UPDATE, {rowsAsStringArray:rowIds} ) );
 		}
 		
 		private function swapVerticalPosition(rowA:Row, rowB:Row):void
