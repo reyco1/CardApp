@@ -20,7 +20,7 @@ package com.andywoods.multitrialapp.view
 	public class CardContainer extends AbstractView
 	{
 		private var container:Sprite;
-		private var rowNames:Array;
+		private var groupNames:Array;
 		private var groupedCards:Dictionary;
 		private var scrollBar:FullScreenScrollBar;
 		private var background:TileBackgroundFiller;
@@ -52,15 +52,17 @@ package com.andywoods.multitrialapp.view
 			scrollBar.content = container;
 			addChild( container );
 			rows = [];
-			rowNames = [];
+			groupNames = [];
 			groupedCards = new Dictionary;
+			
+			var rowCache:Dictionary = new Dictionary();
 				
 		
 			for (var a:int = 0; a < items.length; a++) 
 			{
-				if(rowNames.indexOf( items[a].groupID ) == -1)
+				if(groupNames.indexOf( items[a].groupID ) == -1)
 				{
-					rowNames.push( items[a].groupID );
+					groupNames.push( items[a].groupID );
 					groupedCards[ items[a].groupID ] = [];
 				}
 				
@@ -68,36 +70,53 @@ package com.andywoods.multitrialapp.view
 			}
 			
 			var previousRow:Row = null;
+			var groups:Array = [];
 			
-			for (var b:int = 0; b < rowNames.length; b++) 
+			for (var b:int = 0; b < groupNames.length; b++) 
 			{
 				var group:Group = new Group( cardProperties, groupProperties );
-				group.popuplate( groupedCards[ rowNames[b] ] );
-				
-				var row:Row = new Row();
-				row.index = b;
-				row.addEventListener( "empty", handleEmptyRow );
-				row.addGroup( group );
-				row.verticalPosition = b * group.height;
-				row.onDrag = handleRowDrag;
-				row.onDrop = handleRowDrop;
-				row.y = b * group.height;
-				
-				if(previousRow == null)
+				group.popuplate( groupedCards[ groupNames[b] ] );
+				groups.push( group );
+			}
+			
+			var row:Row;
+			
+			for (var c:int = 0; c < groups.length; c++) 
+			{
+				if(rowCache[ groups[c].startingVerticalPos ])
 				{
-					previousRow = row;
+					row = rowCache[ groups[c].startingVerticalPos ] as Row;
+					row.addGroup( groups[c] );
 				}
 				else
 				{
-					row.previousRow = previousRow;
-					previousRow.nextRow = row;
+					row = new Row();
+					row.index = rows.length;
+					row.addEventListener( "empty", handleEmptyRow );
+					row.addGroup( groups[c] );
+					row.verticalPosition = rows.length * group.height;
+					row.onDrag = handleRowDrag;
+					row.onDrop = handleRowDrop;
+					row.y = rows.length * group.height;
+					
+					if(previousRow == null)
+					{
+						previousRow = row;
+					}
+					else
+					{
+						row.previousRow = previousRow;
+						previousRow.nextRow = row;
+					}
+					
+					previousRow = row;
+					rowCache[ groups[c].startingVerticalPos ] = row;
+					
+					container.addChild( row );
+					rows.push( row );
 				}
-				
-				previousRow = row;
-				
-				container.addChild( row );
-				rows.push( row );
 			}
+			
 			
 			previousRow = null;
 			

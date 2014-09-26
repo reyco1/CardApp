@@ -141,6 +141,16 @@ package com.andywoods.multitrialapp.view.ui
 			}
 		}
 		
+		public function get verPosition():int
+		{
+			return data.verPosition;
+		}
+		
+		public function get horPosition():int
+		{
+			return data.horPosition;
+		}
+		
 		public function clear():void
 		{
 			if( contains( image ) )

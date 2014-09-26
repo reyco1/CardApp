@@ -25,6 +25,7 @@ package com.andywoods.multitrialapp.view.ui
 		
 		public var previousRow:Row;
 		public var row:Row;		
+		public var startingVerticalPos:int;
 		
 		
 		public function Group( cardProperties:CardProperties = null, groupProperties:GroupProperties = null )
@@ -65,6 +66,9 @@ package com.andywoods.multitrialapp.view.ui
 			var card:Card;
 			var prevCard:Card;
 			
+			group.sortOn( "horPosition", Array.NUMERIC );
+			startingVerticalPos = group[0].verPosition;
+			
 			for (var a:int = 0; a < group.length; a++) 
 			{
 				card = new Card( group[a], cardProperties );
@@ -86,7 +90,7 @@ package com.andywoods.multitrialapp.view.ui
 			
 			updateWidth();
 		}
-		
+				
 		public function addCard(card:Card):void
 		{
 			container.addChild( card );
