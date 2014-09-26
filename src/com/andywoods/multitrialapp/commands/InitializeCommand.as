@@ -27,20 +27,20 @@ package com.andywoods.multitrialapp.commands
 			log( this, "Initializing..." );
 			
 			var flashVar:String = context.view.loaderInfo.parameters.cardData;
-			var testData:String = TestData.data;
+			//var testData:String = TestData.data2;
 			var data:String;
 			
 			if(flashVar && flashVar.length > 5)
 				data = flashVar;
-			else
-				data = testData;
+			//else
+				//data = testData;
 			
-			model.items = ItemFactory.parse( data );
+			if(data)	model.items = ItemFactory.parse( data );
 			
-			externalInterfaceManager.init();
+			
 			dragManager.init();
 			keyManager.init( context.view.stage );
-			
+			externalInterfaceManager.init();
 			dispatcher.dispatchEvent( new AppEvent(AppEvent.INITIALIZE_COMPLETE) );
 		}
 	}

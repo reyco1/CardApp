@@ -1,7 +1,6 @@
 package com.andywoods.multitrialapp.manager
 {
 	import com.andywoods.multitrialapp.events.ExternalRequestEvent;
-	import com.andywoods.multitrialapp.events.KeyManagerEvent;
 	import com.andywoods.multitrialapp.model.AppModel;
 	
 	import flash.display.Stage;

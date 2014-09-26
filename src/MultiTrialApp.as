@@ -24,6 +24,7 @@ package
 		{
 			createChildren();
 			new Context().install(MinimalBundle).configure(MultiTrialAppConfig, new ContextView(this));
+		
 		}
 		
 		private function createChildren():void

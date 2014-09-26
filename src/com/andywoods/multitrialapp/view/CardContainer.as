@@ -20,8 +20,8 @@ package com.andywoods.multitrialapp.view
 	public class CardContainer extends AbstractView
 	{
 		private var container:Sprite;
-		private var rowNames:Array = [];
-		private var groupedCards:Dictionary = new Dictionary();
+		private var rowNames:Array;
+		private var groupedCards:Dictionary;
 		private var scrollBar:FullScreenScrollBar;
 		private var background:TileBackgroundFiller;
 		
@@ -36,9 +36,6 @@ package com.andywoods.multitrialapp.view
 			addChild( background );
 			
 			container = new Sprite();
-			addChild( container );
-			
-			rows = [];
 			
 			scrollBar = new FullScreenScrollBar(container, background, 0x222222, 0xff4400, 0x05b59a, 0xffffff, 15, 15, 4, true);
 			addChild(scrollBar);
@@ -49,12 +46,16 @@ package com.andywoods.multitrialapp.view
 			dispatchEvent( new AppEvent( AppEvent.DESELECT_EVERYTHING ) );
 		}
 		
-		public function destroy():void{
-			container = new Sprite;
-		}
-		
 		public function build(items:Vector.<ItemVO>, cardProperties:CardProperties = null, groupProperties:GroupProperties = null):void
 		{
+			container = new Sprite();
+			scrollBar.content = container;
+			addChild( container );
+			rows = [];
+			rowNames = [];
+			groupedCards = new Dictionary;
+				
+		
 			for (var a:int = 0; a < items.length; a++) 
 			{
 				if(rowNames.indexOf( items[a].groupID ) == -1)

@@ -17,7 +17,7 @@ package com.andywoods.multitrialapp.model
 			
 			var arr2:Array = ba.readObject();
 			var item:ItemVO;
-			
+
 			for each(var obj:Object in arr2)
 			{
 				item = new ItemVO();

@@ -39,12 +39,11 @@ package com.andywoods.multitrialapp.view
 		
 		private function handleInitializeComplete( event:AppEvent ):void
 		{
-			view.build( model.items, model.cardProperties, model.groupProperties );
+			if(model.items.length>0)	view.build( model.items, model.cardProperties, model.groupProperties );
 		}
 		
 		private function handleCardsAdded( event:AppEvent ):void
 		{
-			view.destroy();
 			view.build( event.data, model.cardProperties, model.groupProperties );
 		}
 	}
