@@ -19,7 +19,6 @@ package com.andywoods.multitrialapp.manager
 
 			if(allowed)
 			{
-				
 				if(isReady())	linkUpExternalInterfaces();
 				else{
 					Pingback.delay(1000,isReady,linkUpExternalInterfaces);

@@ -125,7 +125,7 @@ package com.andywoods.multitrialapp.view
 			log( this, "Created." );
 		}
 		
-		protected function handleRowDrag( draggingRow:Row ):void
+		public function handleRowDrag( draggingRow:Row ):void
 		{			
 			container.setChildIndex(draggingRow, container.numChildren-1);
 			
@@ -155,7 +155,7 @@ package com.andywoods.multitrialapp.view
 			var rowIds:Array = toArray();
 			
 			if(needsUpdating)	
-				dispatchEvent( new RowEvent( RowEvent.ROW_POSITION_UPDATE, {rowsAsStringArray:rowIds} ) );
+				dispatchEvent( new RowEvent( RowEvent.ROW_POSITION_UPDATE, rowIds ) );
 		}
 		
 		private function swapVerticalPosition(rowA:Row, rowB:Row):void

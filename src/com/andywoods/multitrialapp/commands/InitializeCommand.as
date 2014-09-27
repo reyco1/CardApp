@@ -1,6 +1,6 @@
 package com.andywoods.multitrialapp.commands
 {
-	import com.andywoods.multitrialapp.data.TestData;
+	//import com.andywoods.multitrialapp.data.TestData;
 	import com.andywoods.multitrialapp.events.AppEvent;
 	import com.andywoods.multitrialapp.manager.DragManager;
 	import com.andywoods.multitrialapp.manager.ExternalInterfaceManager;
@@ -27,13 +27,13 @@ package com.andywoods.multitrialapp.commands
 			log( this, "Initializing..." );
 			
 			var flashVar:String = context.view.loaderInfo.parameters.cardData;
-			var testData:String = TestData.data;
-			var data:String;
+			//var testData:String = TestData.data2;
+			var data:String;//= "CQUBClMBF2Rlc2NyaXB0aW9uC2xldmVsIW51bVRyaWFsc0luQmxvY2sVc29ydF9sZXZlbBFncm91cF9pZAYNRG9FeHB0BAEEAgQBBhFCb3ViYTJfNAoBBgoEAQQCBAEGE0JvdWJhMl8xMg==";
 			
 			if(flashVar && flashVar.length > 5)
 				data = flashVar;
-			else
-				data = testData;
+			//else
+				//data = testData;
 			
 			if(data)	model.items = ItemFactory.parse( data );
 			
