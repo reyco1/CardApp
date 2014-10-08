@@ -29,6 +29,7 @@ package
 		
 		private function createChildren():void
 		{
+			stage.showDefaultContextMenu=false;
 			var cardContianer:CardContainer = new CardContainer(stage.stageWidth, stage.stageHeight);
 			addChild( cardContianer );
 		}

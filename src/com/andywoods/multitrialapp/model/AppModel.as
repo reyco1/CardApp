@@ -138,5 +138,22 @@ package com.andywoods.multitrialapp.model
 			var items:Vector.<ItemVO> = ItemFactory.parse( data );			
 			dispatcher.dispatchEvent( new AppEvent(AppEvent.CARDS_ADDED,items) );			
 		}
+		
+		public function getSelected():Object
+		{
+			var selected:String;
+			
+			var cardsSelected:Array = [];
+			for(var i:int=0;i<selecteCards.length;i++){
+				cardsSelected.push(selecteCards[i].data.id);
+			}
+			
+			var groupsSelected:Array = [];
+			for(i=0;i<selecteGroups.length;i++){
+				groupsSelected.push(selecteGroups[i].getGroupId());
+			}
+			
+			return {cardsSelected:cardsSelected, groupsSelected:groupsSelected};
+		}
 	}
 }

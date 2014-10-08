@@ -1,6 +1,6 @@
 package com.andywoods.multitrialapp.commands
 {
-	//import com.andywoods.multitrialapp.data.TestData;
+	import com.andywoods.multitrialapp.data.TestData;
 	import com.andywoods.multitrialapp.events.AppEvent;
 	import com.andywoods.multitrialapp.manager.DragManager;
 	import com.andywoods.multitrialapp.manager.ExternalInterfaceManager;
@@ -9,6 +9,7 @@ package com.andywoods.multitrialapp.commands
 	import com.andywoods.multitrialapp.model.ItemFactory;
 	
 	import flash.events.IEventDispatcher;
+	import flash.system.Capabilities;
 	
 	import robotlegs.bender.bundles.mvcs.Command;
 	import robotlegs.bender.extensions.contextView.ContextView;
@@ -27,8 +28,9 @@ package com.andywoods.multitrialapp.commands
 			log( this, "Initializing..." );
 			
 			var flashVar:String = context.view.loaderInfo.parameters.cardData;
-			//var testData:String = TestData.data2;
+			
 			var data:String;//= "CQUBClMBF2Rlc2NyaXB0aW9uC2xldmVsIW51bVRyaWFsc0luQmxvY2sVc29ydF9sZXZlbBFncm91cF9pZAYNRG9FeHB0BAEEAgQBBhFCb3ViYTJfNAoBBgoEAQQCBAEGE0JvdWJhMl8xMg==";
+			if(Capabilities.isDebugger==true) data = TestData.data;
 			
 			if(flashVar && flashVar.length > 5)
 				data = flashVar;

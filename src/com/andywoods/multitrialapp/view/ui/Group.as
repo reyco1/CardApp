@@ -215,6 +215,16 @@ package com.andywoods.multitrialapp.view.ui
 			editButton.visible = background.alpha > 0;
 		}
 		
+		public function getGroupId():String{
+			for (var a:int = 0; a < container.numChildren; a++)
+			{
+				if(container.getChildAt(a) is Card){
+					return (container.getChildAt(a) as Card).data.groupID;
+				}
+			}
+			return ''; //should never happen
+		}
+		
 		public function getIdForAllCardsInGroup():Array
 		{
 			var ids:Array = [];

@@ -47,6 +47,10 @@ package com.andywoods.multitrialapp.manager
 			ExternalInterface.addCallback("delete"	, function():void{ dispatcher.dispatchEvent(new ExternalRequestEvent(ExternalRequestEvent.DELETE)) });
 			ExternalInterface.addCallback("add"		, function():void{ dispatcher.dispatchEvent(new ExternalRequestEvent(ExternalRequestEvent.ADD)) });
 			ExternalInterface.addCallback("addCards", function(data:String):void{appModel.addCards(data) });
+			ExternalInterface.addCallback("getSelected", function():Object{
+				return appModel.getSelected();
+				//appModel.addCards(data) 
+			});
 		}
 		
 		public function editCard( cardId:String ):void
@@ -86,12 +90,10 @@ class Pingback{
 	public static function delay(delay:int, check:Function, onGood:Function):void
 	{
 		var timeOut:int=20;
-		
 		var t:Timer = new Timer(delay);
 		var found:Boolean;
 		t.addEventListener(TimerEvent.TIMER,function(e:TimerEvent):void{
 			found=check();
-			trace(found)
 			if(found || timeOut<=0){
 				t.removeEventListener(e.type, arguments.callee);
 				if(found)onGood();

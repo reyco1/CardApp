@@ -25,7 +25,7 @@ package com.andywoods.multitrialapp.model
 				{
 					if(key != "bitmap")
 					{
-						item[key] = obj[key];
+						if(item.hasOwnProperty(key))	item[key] = obj[key];
 					}
 					else if(key == "bitmap")
 					{
