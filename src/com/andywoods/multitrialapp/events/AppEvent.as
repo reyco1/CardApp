@@ -10,7 +10,10 @@ package com.andywoods.multitrialapp.events
 		public static const INITIALIZE_COMPLETE:String 		 = "AppEvent.initComplete";
 		public static const SELECTED_CARD_LIST_CHANGE:String = "AppEvent.selectedCardListChange";
 		public static const DESELECT_EVERYTHING:String 		 = "AppEvent.deselectEverything";
-		public static const CARDS_ADDED:String				 = "AppEvent.cardsAdded";
+		public static const POPULATE:String					 = "AppEvent.cardsAdded";
+		public static const ADD_CARDS:String				 = "AppEvent.addCards";
+		public static const DELETE_CARDS:String				 = "AppEvent.deleteCards";
+		
 		
 		public function AppEvent(type:String, data:* = null, bubbles:Boolean=false, cancelable:Boolean=false)
 		{

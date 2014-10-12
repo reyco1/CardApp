@@ -38,6 +38,24 @@ package com.andywoods.multitrialapp.view.ui
 			addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheelEvent);
 		}
 		
+		public function deleteGroup():void{
+			
+			var card:Card;
+			for (var a:int = 0; a < container.numChildren; a++) 
+			{
+				if( container.getChildAt(a) is Card )
+				{
+					card = container.getChildAt(a) as Card;
+					if(card)	deleteCard( card );	
+				}				
+			}		
+			
+			removeChild( container );
+			removeChild( editButton );
+			
+			removeEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheelEvent);
+		}
+		
 		private function build():void
 		{
 			container = new Sprite();

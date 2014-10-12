@@ -5,13 +5,14 @@ package com.andywoods.multitrialapp.model
 	import com.andywoods.multitrialapp.data.ItemVO;
 	import com.andywoods.multitrialapp.events.AppEvent;
 	import com.andywoods.multitrialapp.view.ui.Card;
-	import com.andywoods.multitrialapp.view.ui.Group;
-	
+	import com.andywoods.multitrialapp.view.ui.Group;	
 	import flash.events.IEventDispatcher;
-
+	
+	
 	public class AppModel extends BaseActor
 	{
 		[Inject] public var dispatcher:IEventDispatcher;
+
 		
 		public var cardProperties 	: CardProperties 	= new CardProperties();	
 		public var groupProperties	: GroupProperties 	= new GroupProperties();	
@@ -71,6 +72,7 @@ package com.andywoods.multitrialapp.model
 		
 		public function deselectAllSelectedCards():void
 		{
+			
 			for (var a:int = 0; a < selecteCards.length; a++) 
 			{
 				selecteCards[a].selected = false;
@@ -83,10 +85,29 @@ package com.andywoods.multitrialapp.model
 		
 		public function deleteSelectedCards():void
 		{
+
+			var deletedCardIds:Array = [];
 			while( selecteCards.length > 0 )
 			{
+				deletedCardIds.push(selecteCards[0].data.id);
 				selecteCards[0].group.deleteCard( selecteCards[0] );
 				selecteCards.splice(0, 1);
+			}
+			
+			var deletedGroupsIds:Array = [];
+			
+			
+			while( selecteGroups.length > 0 )
+			{
+				deletedGroupsIds.push(selecteGroups[0].getGroupId());
+				selecteGroups[0].deleteGroup();
+				selecteGroups.splice(0, 1);
+			}
+			deselectAllSelectedGroups();
+			
+			
+			if(deletedCardIds.length>0 || deletedGroupsIds.length>0){
+				dispatcher.dispatchEvent( new AppEvent(AppEvent.DELETE_CARDS,{cards:deletedCardIds,groups:deletedGroupsIds}) );		
 			}
 		}
 		
@@ -133,10 +154,16 @@ package com.andywoods.multitrialapp.model
 			deselectAllSelectedGroups();
 		}
 		
+		public function populate(data:String):void
+		{
+			var items:Vector.<ItemVO> = ItemFactory.parse( data );			
+			dispatcher.dispatchEvent( new AppEvent(AppEvent.POPULATE,items) );			
+		}
+		
 		public function addCards(data:String):void
 		{
 			var items:Vector.<ItemVO> = ItemFactory.parse( data );			
-			dispatcher.dispatchEvent( new AppEvent(AppEvent.CARDS_ADDED,items) );			
+			dispatcher.dispatchEvent( new AppEvent(AppEvent.ADD_CARDS,items) );		
 		}
 		
 		public function getSelected():Object
@@ -155,5 +182,7 @@ package com.andywoods.multitrialapp.model
 			
 			return {cardsSelected:cardsSelected, groupsSelected:groupsSelected};
 		}
+		
+		
 	}
 }

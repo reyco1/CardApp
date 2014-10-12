@@ -18,8 +18,10 @@ package com.andywoods.multitrialapp.view
 		{
 			// context event listeners
 			addContextListener( AppEvent.INITIALIZE_COMPLETE, handleInitializeComplete, AppEvent );
-			addContextListener( AppEvent.CARDS_ADDED, handleCardsAdded, AppEvent );
+			addContextListener( AppEvent.POPULATE, handleCardsPopulated, AppEvent );
+			addContextListener( AppEvent.ADD_CARDS, handleCardsAdded, AppEvent );
 			addContextListener( AppEvent.SELECTED_CARD_LIST_CHANGE, handleCardlistChanged, AppEvent );
+			addContextListener( AppEvent.DELETE_CARDS, handleCardsDeleted, AppEvent );
 			
 			// view event listeners
 			addViewListener( AppEvent.DESELECT_EVERYTHING, handleBackgroundClicked, AppEvent );
@@ -29,6 +31,11 @@ package com.andywoods.multitrialapp.view
 		private function handleCardlistChanged( event:AppEvent ):void
 		{
 			view.handleRowDrop();
+		}
+		
+		private function handleCardsDeleted( event:AppEvent ):void
+		{
+			externalInterfaceManager.cardsDeleted( event.data );
 		}
 		
 		private function handleRowPositionChange( event:RowEvent ):void
@@ -48,9 +55,14 @@ package com.andywoods.multitrialapp.view
 			if(model.items.length>0)	view.build( model.items, model.cardProperties, model.groupProperties );
 		}
 		
+		private function handleCardsPopulated( event:AppEvent ):void
+		{
+			view.build( event.data, model.cardProperties, model.groupProperties,true );
+		}
+		
 		private function handleCardsAdded( event:AppEvent ):void
 		{
-			view.build( event.data, model.cardProperties, model.groupProperties );
+			view.build( event.data, model.cardProperties, model.groupProperties,false );
 		}
 	}
 }

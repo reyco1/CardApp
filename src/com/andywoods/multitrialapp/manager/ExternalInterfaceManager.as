@@ -46,11 +46,9 @@ package com.andywoods.multitrialapp.manager
 			ExternalInterface.addCallback("merge"	, function():void{ dispatcher.dispatchEvent(new ExternalRequestEvent(ExternalRequestEvent.MERGE)) });
 			ExternalInterface.addCallback("delete"	, function():void{ dispatcher.dispatchEvent(new ExternalRequestEvent(ExternalRequestEvent.DELETE)) });
 			ExternalInterface.addCallback("add"		, function():void{ dispatcher.dispatchEvent(new ExternalRequestEvent(ExternalRequestEvent.ADD)) });
-			ExternalInterface.addCallback("addCards", function(data:String):void{appModel.addCards(data) });
-			ExternalInterface.addCallback("getSelected", function():Object{
-				return appModel.getSelected();
-				//appModel.addCards(data) 
-			});
+			ExternalInterface.addCallback("populate", function(data:String):void{appModel.populate(data) });
+			ExternalInterface.addCallback("addCards", function(data:String):void{ appModel.addCards(data); });
+			ExternalInterface.addCallback("getSelected", function():Object{return appModel.getSelected(); });
 		}
 		
 		public function editCard( cardId:String ):void
@@ -77,6 +75,11 @@ package com.andywoods.multitrialapp.manager
 				ExternalInterface.call.apply( null, arguments );
 			
 			arguments.unshift( ExternalInterfaceManager );
+		}
+		
+		public function cardsDeleted(deleted:Object):void
+		{
+			call( "cardsDeleted", deleted )
 		}
 	}
 }

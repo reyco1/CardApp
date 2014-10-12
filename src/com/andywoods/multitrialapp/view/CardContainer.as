@@ -19,13 +19,13 @@ package com.andywoods.multitrialapp.view
 
 	public class CardContainer extends AbstractView
 	{
-		private var container:Sprite;
-		private var groupNames:Array;
-		private var groupedCards:Dictionary;
+		private var container:Sprite = new Sprite();
+		private var groupNames:Array = [];
+		private var groupedCards:Dictionary = new Dictionary;;
 		private var scrollBar:FullScreenScrollBar;
 		private var background:TileBackgroundFiller;
 		
-		public  var rows:Array;
+		public  var rows:Array = [];
 		
 		public function CardContainer(w:Number, h:Number)
 		{
@@ -34,10 +34,9 @@ package com.andywoods.multitrialapp.view
 			background = new TileBackgroundFiller();
 			background.addEventListener( MouseEvent.MOUSE_DOWN, handleBackgroundClicked );
 			addChild( background );
-			
-			container = new Sprite();
-			
+			addChild( container );
 			scrollBar = new FullScreenScrollBar(container, background, 0x222222, 0xff4400, 0x05b59a, 0xffffff, 15, 15, 4, true);
+			scrollBar.content = container;
 			addChild(scrollBar);
 		}
 		
@@ -46,20 +45,19 @@ package com.andywoods.multitrialapp.view
 			dispatchEvent( new AppEvent( AppEvent.DESELECT_EVERYTHING ) );
 		}
 		
-		public function build(items:Vector.<ItemVO>, cardProperties:CardProperties = null, groupProperties:GroupProperties = null):void
+		public function build(items:Vector.<ItemVO>, cardProperties:CardProperties = null, groupProperties:GroupProperties = null, reset:Boolean = true):void
 		{
-			if(container){
+			if(reset){
 				while(container.numChildren>0)	container.removeChildAt(0);
-				container = new Sprite();
+				rows = [];
+				groupNames = [];
+				container= new Sprite;
+				groupedCards = new Dictionary;
+				scrollBar.content = container;
+				addChild( container );
 			}
-			scrollBar.content = container;
-			addChild( container );
-			rows = [];
-			groupNames = [];
-			groupedCards = new Dictionary;
 			
-			var rowCache:Dictionary = new Dictionary();
-				
+			var rowCache:Dictionary = new Dictionary();	
 		
 			for (var a:int = 0; a < items.length; a++) 
 			{
